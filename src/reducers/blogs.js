@@ -1,0 +1,29 @@
+const blogsReducerDefaultState = [];
+
+const blogsReducer = (state = blogsReducerDefaultState, action) => {
+    switch (action.type) {
+        case 'ADD_BLOG':
+            return [...state, action.blog];
+        case 'REMOVE_BLOG':
+            return state.filter(({id}) => id !== action.id);
+        case 'EDIT_BLOG':
+            return state.map((blog) => {
+                if (blog.id === action.id) {
+                    return {
+                        ...blog,
+                        ...blog.updates
+                    };
+                } else {
+                    return blog;
+                }
+            });
+        case 'SET_BLOGS':
+            return action.blogs;
+        case 'CLEAR_BLOGS':
+            return [];
+        default:
+            return state;
+    }
+};
+
+export default blogsReducer;
